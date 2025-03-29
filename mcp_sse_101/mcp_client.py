@@ -1,4 +1,5 @@
 import asyncio
+import argparse
 import mcp
 from mcp import ClientSession
 from mcp.client.sse import sse_client
@@ -11,15 +12,7 @@ except PackageNotFoundError:
     print("mcp package is not installed.")
 
 
-async def interactive_client():
-    # Prompt user for SSE URL
-    url = input(
-        "Enter your MCP SSE server URL (e.g. https://abc-10-244-24-75-8080.saci.r.killercoda.com/sse): ").strip()
-
-    if not url:
-        print("❌ Error: URL is required to connect to the server.")
-        return
-
+async def interactive_client(url: str):
     print(f"\nConnecting to MCP server via SSE at: {url} ...")
 
     try:
@@ -89,7 +82,6 @@ Available commands:
                         print(f"Available tools: {', '.join(tool_names)}")
                         tool_name = input("Enter tool name: ").strip()
 
-                        # Find the tool definition to extract its schema
                         tool_def = next((t for t in tools.tools if t.name == tool_name), None)
                         if not tool_def:
                             print(f"Tool '{tool_name}' not found.")
@@ -149,5 +141,9 @@ Available commands:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generic MCP Client (SSE-based)")
+    parser.add_argument("--url", type=str, required=True, help="MCP SSE server URL (e.g. https://your-server/sse)")
+
+    args = parser.parse_args()
     print("Starting the MCP Client ...")
-    asyncio.run(interactive_client())
+    asyncio.run(interactive_client(url=args.url))

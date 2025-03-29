@@ -1,16 +1,10 @@
 import asyncio
+import argparse
 from mcp import ClientSession
 from mcp.client.sse import sse_client
 
 
-async def interactive_client():
-    # Prompt user for SSE URL
-    url = input("Enter your MCP SSE server URL (e.g. https://abc-10-244-24-75-8080.saci.r.killercoda.com/sse): ").strip()
-
-    if not url:
-        print("❌ Error: URL is required to connect to the server.")
-        return
-
+async def interactive_client(url: str):
     print(f"\nConnecting to MCP server at: {url} ...")
 
     try:
@@ -34,7 +28,6 @@ async def interactive_client():
 
                 print(f"\n✅ Server is ready. Available tools: {', '.join(tool_names)}")
                 print(f"Available prompts: {', '.join(prompt_names)}")
-
                 print("\nYou can now continue to interact with the server...")
 
     except Exception as e:
@@ -47,4 +40,13 @@ async def interactive_client():
 
 
 if __name__ == "__main__":
-    asyncio.run(interactive_client())
+    parser = argparse.ArgumentParser(description="Simple MCP Client to list tools and prompts")
+    parser.add_argument(
+        "--url",
+        type=str,
+        required=True,
+        help="MCP SSE server URL (e.g. https://your-server-name.saci.r.killercoda.com/sse)"
+    )
+
+    args = parser.parse_args()
+    asyncio.run(interactive_client(url=args.url))
