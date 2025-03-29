@@ -4,7 +4,8 @@ import os
 from datetime import datetime
 import re
 
-mcp = FastMCP("StoryServer")
+mcp = FastMCP("StoryServer", description="A tool for creating and saving stories with characters.",
+              port=8080)
 
 CHARACTERS = {
     "Jack": {
