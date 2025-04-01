@@ -135,7 +135,11 @@ Available commands:
         print("❌ Error connecting to server:")
         if hasattr(e, 'exceptions'):  # ExceptionGroup
             for sub_e in e.exceptions:
-                print(f" - {type(sub_e).__name__}: {sub_e}")
+                print(f"- {type(sub_e).__name__}: {sub_e}")
+                from builtins import ExceptionGroup  # Needed in Python 3.11+
+                # If you want to detect a specific error like "Method not found"
+                if isinstance(sub_e, ExceptionGroup):
+                    print(f"  - {type(sub_e.exceptions[0]).__name__}: {sub_e.exceptions[0]}")
         else:
             print(f" - {type(e).__name__}: {e}")
 
