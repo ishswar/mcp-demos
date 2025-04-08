@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "description": "title name"
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000000,
+      "description": "content"
+    }
+  },
+  "required": [
+    "title",
+    "content"
+  ]
+}
