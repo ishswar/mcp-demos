@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 
 public class SseServer {
 
@@ -51,12 +52,13 @@ public class SseServer {
         ServletHolder servletHolder = new ServletHolder(transport);
         servletContextHandler.addServlet(servletHolder, "/*");
 
-        Server httpserver = new Server(8282);
+        // Start server on 0.0.0.0:8282
+        Server httpserver = new Server(new InetSocketAddress("0.0.0.0", 8282));
         httpserver.setHandler(servletContextHandler);
 
         try {
             httpserver.start();
-            logger.info("Jetty HTTP server started on http://127.0.0.1:8282");
+            logger.info("Jetty HTTP server started on http://0.0.0.0:8282");
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {
@@ -70,7 +72,7 @@ public class SseServer {
 
             httpserver.join();
         } catch (Exception e) {
-            logger.error("Error starting HTTP server on http://127.0.0.1:82802", e);
+            logger.error("Error starting HTTP server on http://0.0.0.0:8282", e);
             server.close();
         }
     }
