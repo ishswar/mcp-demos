@@ -20,8 +20,8 @@ public class SseServer {
     private static final String SERVER_NAME = "mcp-server-story-builder";
     private static final String SERVER_VERSION = "0.8.1";
     private static final ObjectMapper JSON = new ObjectMapper();
-    private static final String MSG_ENDPOINT = "/mcp/message";
-    private static final String SSE_ENDPOINT = "/mcp/sse";
+    private static final String MSG_ENDPOINT = "/message";
+    private static final String SSE_ENDPOINT = "/sse";
     private McpSyncServer server;
 
     private void initialize() throws IOException {
