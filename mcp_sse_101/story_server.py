@@ -5,7 +5,7 @@ from mcp.server.fastmcp import FastMCP
 from mcp.server.fastmcp.prompts import base
 
 mcp = FastMCP("StoryServer", description="A tool for creating and saving stories with characters.",
-              port=8080)
+              port=8083)
 
 CHARACTERS = {
     "Jack": {
@@ -24,8 +24,11 @@ CHARACTERS = {
 
 
 @mcp.tool(description="Get the list of all available character names.")
-def get_characters() -> list[str]:
+def get_characters(reason: str) -> list[str]:
     """Returns a list of all defined character names.
+
+    Args:
+        reason (str): The reason for fetching the character names.
 
     Returns:
         list[str]: A list of character names.
@@ -94,8 +97,11 @@ def save_story(title: str, content: str) -> str:
 
 
 @mcp.tool(description="List all saved story files in markdown format.")
-def list_stories() -> list[str]:
+def list_stories(reason: str) -> list[str]:
     """Returns a list of all saved .md story filenames in the current directory.
+
+    Args:
+        reason (str): The reason for listing the story files.
 
     Returns:
         list[str]: List of markdown file names.
